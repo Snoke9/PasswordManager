@@ -7,7 +7,16 @@
         mc:Ignorable="d"
         Title="PasswordManager" Height="450" Width="968" MinHeight="250" MinWidth="680"
         Icon="gold-key.ico">
+
+    <Window.Resources>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+
+
     <Grid>
+        
         
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="48"/>
@@ -28,9 +37,9 @@
         <Label Content="Логин" Grid.Column="1" FontFamily="Dubai Medium" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Top" Height="49" Width="100" Grid.ColumnSpan="2" Margin="0,4,0,0" Grid.RowSpan="2"/>
         <Label Content="Пароль" Grid.Column="3" FontFamily="Dubai Medium" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Top" Height="50" Width="121" Margin="0,4,0,0" Grid.RowSpan="2"/>
 
-        <TextBox x:Name="serviceNameTextBox" TextAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,10,0" Height="27"/>
-        <TextBox x:Name="usernameTextBox" TextAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,10,0" Height="27" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="passwordTextBox" TextAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,10,0" Height="27"/>
+        <TextBox x:Name="serviceNameTextBox" TextAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,10,0" Height="27" KeyDown="textBox_KeyDown"/>
+        <TextBox x:Name="usernameTextBox" TextAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,10,0" Height="27" Grid.ColumnSpan="2" KeyDown="textBox_KeyDown"/>
+        <TextBox x:Name="passwordTextBox" TextAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,10,0" Height="27" KeyDown="textBox_KeyDown"/>
         
         <Button x:Name="SaveButton" Content="Сохранить" Grid.Column="4" Grid.Row="1" FontFamily="Dubai Medium" FontSize="20" Click="saveButton_Click" Margin="10,10,10,10" Grid.RowSpan="2"/>
 
@@ -39,7 +48,7 @@
         <Button x:Name="showPasswordsButton" Content="Показать пароли" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" FontFamily="Dubai Medium" FontSize="14" Click="showPasswordsButton_Click" Margin="10,10,2,10"/>
         <Button x:Name="deleteButton" Content="Удалить запись" Grid.Column="2" Grid.Row="2" FontFamily="Dubai Medium" FontSize="14" Click="deleteButton_Click" Margin="3,10,10,10" Grid.ColumnSpan="2"/>
 
-        <DataGrid x:Name="dataGridAccounts" Grid.Row="3" Grid.ColumnSpan="5" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="10,10,10,10">
+        <DataGrid x:Name="dataGridAccounts" Grid.Row="3" Grid.ColumnSpan="5" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="10,10,10,10" MouseLeftButtonDown="dataGridAccounts_MouseLeftButtonDown">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Service Name" Binding="{Binding ServiceName}" Width="*"/>
                 <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*"/>

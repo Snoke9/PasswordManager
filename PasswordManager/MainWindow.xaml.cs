@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.Security.Cryptography;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Configuration;
 
 
 namespace PasswordManager
@@ -16,6 +17,11 @@ namespace PasswordManager
         public MainWindow()
         {
             InitializeComponent();
+
+            serviceNameTextBox.KeyDown += textBox_KeyDown;
+            usernameTextBox.KeyDown += textBox_KeyDown;
+            passwordTextBox.KeyDown += textBox_KeyDown;
+
         }
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
@@ -28,6 +34,7 @@ namespace PasswordManager
             if (string.IsNullOrWhiteSpace(serviceName) || string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
                 MessageBox.Show("Заполните все поля.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Information);
+                serviceNameTextBox.Focus();
                 return;
             }
 
@@ -45,6 +52,7 @@ namespace PasswordManager
             serviceNameTextBox.Clear();
             usernameTextBox.Clear();
             passwordTextBox.Clear();
+            serviceNameTextBox.Focus();
 
             MessageBox.Show("Пароль сохранен", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -119,10 +127,30 @@ namespace PasswordManager
             T parent = parentObject as T;
             return parent ?? FindParent<T>(parentObject);
         }
+
+        private void serviceNameTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void textBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                e.Handled = true;
+                if (sender == serviceNameTextBox)
+                    usernameTextBox.Focus();
+                else if (sender == usernameTextBox)
+                    passwordTextBox.Focus();
+                else if (sender == passwordTextBox)
+                    saveButton_Click(null!, null!);
+            }
+        }
     }
 
     public class Account
     {
+        public int Id { get; set; }
         public string ServiceName { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
@@ -135,6 +163,7 @@ namespace PasswordManager
         public Database()
         {
             ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS Accounts (
+                                Id INTEGER PRIMARY KEY AUTOINCREMENT,
                                 ServiceName TEXT NOT NULL,
                                 Username TEXT NOT NULL,
                                 EncryptedPassword TEXT NOT NULL)");
@@ -172,7 +201,7 @@ namespace PasswordManager
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                string selectQuery = "SELECT ServiceName, Username, EncryptedPassword FROM Accounts";
+                string selectQuery = "SELECT Id, ServiceName, Username, EncryptedPassword FROM Accounts";
                 using (var command = new SQLiteCommand(selectQuery, connection))
                 {
                     using (SQLiteDataReader reader = command.ExecuteReader())
@@ -181,6 +210,7 @@ namespace PasswordManager
                         {
                             Account account = new Account
                             {
+                                Id = Convert.ToInt32(reader["Id"]),
                                 ServiceName = reader["ServiceName"].ToString(),
                                 Username = reader["Username"].ToString(),
                                 Password = Encryption.Decrypt(reader["EncryptedPassword"].ToString())
@@ -197,11 +227,10 @@ namespace PasswordManager
         {
             try
             {
-                string query = "DELETE FROM Accounts WHERE ServiceName = @ServiceName AND Username = @Username";
+                string query = "DELETE FROM Accounts WHERE Id = @Id";
                 SQLiteParameter[] parameters =
                 {
-                new SQLiteParameter("@ServiceName", account.ServiceName),
-                new SQLiteParameter("@Username", account.Username)
+                new SQLiteParameter("@Id", account.Id)
             };
                 ExecuteNonQuery(query, parameters);
             }
@@ -215,7 +244,7 @@ namespace PasswordManager
 
     public static class Encryption
     {
-        private static readonly string key = "your-secret-key!".PadRight(32);
+        private static readonly string key = ConfigurationManager.AppSettings["KEY"]!.PadRight(32);
 
         public static string Encrypt(string plainText)
         {
