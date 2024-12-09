@@ -109,9 +109,9 @@ namespace PasswordManager
 
                     if (account != null)
                     {
-                        if (dataGridCell.Column.Header.ToString() == "Username")
+                        if (dataGridCell.Column.Header.ToString() == "Логин")
                             Clipboard.SetText(account.Username);
-                        else if (dataGridCell.Column.Header.ToString() == "Password")
+                        else if (dataGridCell.Column.Header.ToString() == "Пароль")
                             Clipboard.SetText(account.Password);
                     }
                 }
@@ -231,7 +231,7 @@ namespace PasswordManager
                 SQLiteParameter[] parameters =
                 {
                 new SQLiteParameter("@Id", account.Id)
-            };
+                };
                 ExecuteNonQuery(query, parameters);
             }
             catch (Exception ex)
