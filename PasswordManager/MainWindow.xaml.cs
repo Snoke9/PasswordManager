@@ -128,11 +128,6 @@ namespace PasswordManager
             return parent ?? FindParent<T>(parentObject);
         }
 
-        private void serviceNameTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
         private void textBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
