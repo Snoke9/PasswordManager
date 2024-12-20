@@ -25,11 +25,12 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="277*"/>
-            <ColumnDefinition Width="140*"/>
-            <ColumnDefinition Width="136*"/>
-            <ColumnDefinition Width="277*"/>
-            <ColumnDefinition Width="138*"/>
+            <ColumnDefinition Width="182*"/>
+            <ColumnDefinition Width="183*"/>
+            <ColumnDefinition Width="51*"/>
+            <ColumnDefinition Width="139*"/>
+            <ColumnDefinition Width="276*"/>
+            <ColumnDefinition Width="137*"/>
         </Grid.ColumnDefinitions>
 
         <TextBox x:Name="serviceNameTextBox" 
@@ -46,34 +47,44 @@
                  Grid.RowSpan="2" 
                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                  HorizontalScrollBarVisibility="Hidden"/>
-        
+
         <TextBox x:Name="usernameTextBox" 
                  materialDesign:HintAssist.Hint="Логин" 
                  FontSize="14" FontFamily="Dubai" 
                  TextAlignment="Center" 
                  VerticalContentAlignment="Center" 
-                 Grid.Column="1" 
                  TextWrapping="NoWrap" 
                  VerticalAlignment="Top" 
                  Margin="5,10,5,0" 
                  Height="40" 
-                 Grid.ColumnSpan="2" 
                  KeyDown="textBox_KeyDown" 
                  Grid.RowSpan="2" 
-                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"/>
-        
+                 ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Column="1"/>
+
         <TextBox x:Name="passwordTextBox" 
                  materialDesign:HintAssist.Hint="Пароль" 
                  FontSize="14" FontFamily="Dubai" 
                  TextAlignment="Center" 
                  VerticalContentAlignment="Center" 
-                 Grid.Column="3" TextWrapping="NoWrap" 
+                 Grid.Column="2" TextWrapping="NoWrap" 
                  VerticalAlignment="Top" 
                  Margin="5,10,5,0" 
                  Height="40" 
                  KeyDown="textBox_KeyDown" 
                  Grid.RowSpan="2" 
-                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"/>
+                 ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.ColumnSpan="2"/>
+
+        <TextBox x:Name="additionalTextBox" 
+                 materialDesign:HintAssist.Hint="Дополнительно" 
+                 FontSize="14" FontFamily="Dubai" 
+                 TextAlignment="Center" 
+                 VerticalContentAlignment="Center" 
+                 Grid.Column="4" TextWrapping="NoWrap" 
+                 VerticalAlignment="Top" 
+                 Margin="5,10,5,0" 
+                 Height="40" 
+                 KeyDown="textBox_KeyDown" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.RowSpan="2"/>
 
         <TextBox materialDesign:HintAssist.Hint="🔍 Поиск" 
                  Name="searchTextBox" 
@@ -81,7 +92,7 @@
                  FontFamily="Dubai" 
                  TextAlignment="Center" 
                  VerticalContentAlignment="Center" 
-                 Grid.Column="4" 
+                 Grid.Column="5" 
                  Height="40" 
                  VerticalAlignment="Top" 
                  TextChanged="searchTextBox_TextChanged" 
@@ -92,7 +103,7 @@
 
         <Button x:Name="SaveButton" 
                 Content="Сохранить" 
-                Grid.Column="4" 
+                Grid.Column="5" 
                 Grid.Row="1" 
                 FontFamily="Dubai Medium" 
                 FontSize="16" 
@@ -103,15 +114,15 @@
                 Content="Показать пароли" 
                 Grid.Column="0" 
                 Grid.Row="1" 
-                Grid.ColumnSpan="2" 
+                Grid.ColumnSpan="3" 
                 FontFamily="Dubai Medium" 
                 FontSize="16" 
                 Click="showPasswordsButton_Click" 
                 Margin="10,10,5,6"/>
-        
+
         <Button x:Name="deleteButton" 
                 Content="Удалить запись"
-                Grid.Column="2" 
+                Grid.Column="3" 
                 Grid.Row="1" 
                 FontFamily="Dubai Medium" 
                 FontSize="16" 
@@ -121,7 +132,7 @@
 
         <DataGrid x:Name="dataGridAccounts" 
                   Grid.Row="2" 
-                  Grid.ColumnSpan="5" 
+                  Grid.ColumnSpan="6" 
                   AutoGenerateColumns="False" 
                   CanUserAddRows="False" 
                   IsReadOnly="True" 
@@ -139,9 +150,10 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Сервис" Binding="{Binding ServiceName}" Width="*" FontFamily="Dubai" FontSize="16"/>
                 <DataGridTextColumn Header="Логин" Binding="{Binding Username}" Width="*" FontFamily="Dubai" FontSize="16"/>
-                <DataGridTextColumn Header="Пароль" Binding="{Binding Password}" Width="*" FontFamily="Dubai" FontSize="16"/>
+                <DataGridTextColumn Header="Пароль" Binding="{Binding MaskedPassword}" Width="*" FontFamily="Dubai" FontSize="16"/>
+                <DataGridTextColumn Header="Дополнительно" Binding="{Binding Additional}" Width="*" FontFamily="Dubai" FontSize="16"/>
             </DataGrid.Columns>
         </DataGrid>
-
+        
     </Grid>
 </Window>
