@@ -1,12 +1,2 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PasswordManager
-{
-    class README
-    {
-    }
-}
+﻿<h2>Скопируйте логин или пароль нажатием ЛКМ по ним</h2>
+![readme](snokepass.png)
