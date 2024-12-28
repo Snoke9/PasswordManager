@@ -1,2 +1,2 @@
 ﻿<h2>Скопируйте логин или пароль нажатием ЛКМ по ним</h2>
-![readme](snokepass.png)
+<img src="snokepass.png" alt="README">
